@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>soccer game</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.10.0/p5.js"></script>
+</head>
+<body>
+  <script>
+      let x, y;
+      let speedX = 3;
+      let speedY = 3; 
+      let level = 1;
+      let speedMultiplier = 1.2;
+      let diameter = 50;
+      let gameRunning = true;
+      let bgImage;
+
+      function preload() {
+          bgImage = loadImage("soccer.jpg");
+      }
+
+      function setup() {
+          createCanvas(windowWidth, windowHeight);
+          x = random(diameter, width - diameter);
+          y = random(diameter, height - diameter);
+          textAlign(LEFT, TOP);
+      }
+
+      function draw() {
+          if (gameRunning) {
+              background(bgImage);
+
+              // 공 색상 및 위치
+              fill((x / width) * 255, (y / height) * 255, 150);
+              noStroke();
+              ellipse(x, y, diameter, diameter);
+
+              x += speedX;
+              y += speedY;
+
+              //방향 반전
+              if (x >= width - diameter / 2 || x <= diameter / 2) speedX *= -1;
+              if (y >= height - diameter / 2 || y <= diameter / 2) speedY *= -1;
+
+              fill(255);
+              textSize(24);
+              text("Level " + level, 10, 10);
+          }
+      }
+
+      function mousePressed() {
+          if (dist(mouseX, mouseY, x, y) < diameter / 2) {
+              gameRunning = false;
+              if (confirm("Success! 다음 단계로 넘어가려면 확인, 종료하려면 취소를 누르세요.")) {
+                  level += 1;
+                  speedX *= speedMultiplier;
+                  speedY *= speedMultiplier;
+                  gameRunning = true;
+              } else {
+                  alert("게임 종료!");
+              }
+          }
+      }
+
+      function windowResized() {
+          resizeCanvas(windowWidth, windowHeight);
+      }
+  </script>
+</body>
+</html>
