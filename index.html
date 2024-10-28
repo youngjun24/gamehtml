@@ -42,7 +42,10 @@
               //방향 반전
               if (x >= width - diameter / 2 || x <= diameter / 2) speedX *= -1;
               if (y >= height - diameter / 2 || y <= diameter / 2) speedY *= -1;
-
+            
+              fill(0,0,0,150);
+              rect(5,5,85,35,5);
+            
               fill(255);
               textSize(24);
               text("Level " + level, 10, 10);
